@@ -1,0 +1,23 @@
+/usr/bin/ld: /tmp/cc2EBchK.o: in function `main':
+ush.c:(.text+0xc4): undefined reference to `analizar'
+/usr/bin/ld: ush.c:(.text+0xd2): undefined reference to `num_ordenes'
+/usr/bin/ld: ush.c:(.text+0xdd): undefined reference to `num_argumentos'
+/usr/bin/ld: ush.c:(.text+0xe9): undefined reference to `get_ordenes'
+/usr/bin/ld: ush.c:(.text+0xf5): undefined reference to `get_argumentos'
+/usr/bin/ld: ush.c:(.text+0x10a): undefined reference to `es_background'
+/usr/bin/ld: ush.c:(.text+0x112): undefined reference to `es_append'
+/usr/bin/ld: ush.c:(.text+0x11a): undefined reference to `fich_salida'
+/usr/bin/ld: ush.c:(.text+0x122): undefined reference to `fich_entrada'
+/usr/bin/ld: ush.c:(.text+0x13b): undefined reference to `pipeline'
+/usr/bin/ld: ush.c:(.text+0x145): undefined reference to `es_background'
+/usr/bin/ld: ush.c:(.text+0x16c): undefined reference to `ejecutar'
+/usr/bin/ld: /tmp/cc2EBchK.o: in function `visualizar':
+ush.c:(.text+0x297): undefined reference to `num_ordenes'
+/usr/bin/ld: ush.c:(.text+0x2b8): undefined reference to `es_background'
+/usr/bin/ld: ush.c:(.text+0x2e1): undefined reference to `num_argumentos'
+/usr/bin/ld: ush.c:(.text+0x2ea): undefined reference to `get_argumentos'
+/usr/bin/ld: ush.c:(.text+0x3ad): undefined reference to `fich_entrada'
+/usr/bin/ld: ush.c:(.text+0x3e7): undefined reference to `fich_salida'
+/usr/bin/ld: ush.c:(.text+0x403): undefined reference to `fich_salida'
+/usr/bin/ld: ush.c:(.text+0x412): undefined reference to `es_append'
+collect2: error: ld returned 1 exit status

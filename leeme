@@ -1,0 +1,37 @@
+Prácticas de SO2. Microshell
+
+En este paquete podrás encontrar el código de partida para implementar
+las correspondientes prácticas de construcción de un microshell. Este
+código compila sin errores invocando la órden "make"
+
+El módulo "bucle principal" implementado en el fichero ush.c se suministra 
+parcialmente implementado, supera el test "testRedir" pero no el test 
+"testSenyal", es capaz, por lo tanto, de ejecutar lineas de ordenes con tubos,
+ redirecciones, etc. Dentro de este módulo se invoca una serie de funciones
+cuyos nombres terminan con el sufijo "_profe" y que:
+
+*DEBERAN SER SUBSTITUIDAS*
+
+por las funciones correspondientes desarrolladas por el alumno durante
+ las sesiones prácticas.
+
+El módulo analizador se suministra totalmente implementado. No es necesario 
+editarlo, aunque leerlo y familiarizarse con el código desde un punto de 
+vista general es conveniente.
+
+Leer el archivo "defines.h" para conocer las constantes de uso general
+y el tipo CDMFD.
+
+Los programas:
+ejecucion1.c
+ejecucion2.c
+ejecucion3.c
+Son un buen ejemplo para entender qué se debe implementar en el proyecto.
+No pertenecen al proyecto y se compilan madiante la orden "make todo"
+
+El fichero 
+ejecucion1a.c
+comprueba el funcionamiento de la implementación de la redirección. Puede
+usarse para validar el funcionamiento de la práctica correspondiente.
+
+Un saludo.
