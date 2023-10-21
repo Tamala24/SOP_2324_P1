@@ -32,6 +32,9 @@ int pipeline(int ncmd, char * infile, char * outfile, int append, int bgnd) {
 		fprintf(stderr, "Error al iniciar el vector de descriptores\n");
 		return ERROR;
 	}
+	/*if(bgnd) {
+		
+	}*/
 	int fd, fds[2]; 
 	if(strcmp(infile, "")) { 
 		if((fd = open(infile, O_RDONLY)) == -1) {

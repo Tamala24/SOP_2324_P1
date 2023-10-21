@@ -26,7 +26,7 @@
 #define OK 1
 #define ERROR 0
 
-#define LOGO "MICRO SHELL (c)2023 Tu nombre\n"
+#define LOGO "MICRO SHELL (c)2023 ANIEGIL\n"
 #define PROMPT " : ush_$ "
 
 #define MAXLINE 200

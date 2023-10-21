@@ -15,9 +15,10 @@
 #include <string.h>
 #include <signal.h>
 #include "profe.h"
-
 #include <stdio.h>
 //#define PATH_MAX 50
+
+char *internas[] = {"exit" , "cd"};
 
 //
 // Declaraciones de funciones locales
@@ -38,7 +39,7 @@ int main(int argc, char * argv[])
   char ***m_argumentos;
   int *m_num_arg;
   int m_n;
-
+  printf("%s",LOGO);
   while(1)
   {
     
@@ -62,6 +63,29 @@ int main(int argc, char * argv[])
 	     m_argumentos=get_argumentos();
 	     if(m_n>0)
 	     {
+		int interna = 0;
+		for(int i=0;i < m_n; i++) {
+			if(!strcmp(m_ordenes[i], internas[0])) {
+				if(m_num_arg[i] == 1) {
+					exit(0);
+				} else if(m_num_arg[i] == 2) {
+					int n = atoi(m_argumentos[i][1]);
+					if(n > -1 && n < 10) //REVISAR TOPE DE N
+						exit(n);
+					else {
+						fprintf(stderr,"argumento fuera de rango\n");
+						return ERROR;
+					}
+				} else {
+					fprintf(stderr,"exit requiere de un argumento int\n");
+					return ERROR;
+				}
+			}
+			if(!strcmp(m_ordenes[i], internas[1])) {
+				interna = i;
+			}
+
+		}
                 if (pipeline(m_n,fich_entrada(),fich_salida(),es_append(),es_background()) == OK) {
                     if(ejecutar(m_n,m_num_arg,m_ordenes,m_argumentos,es_background()) == ERROR) 
 		   	return ERROR;
@@ -107,7 +131,7 @@ int leerLinea( char *linea, int tamanyLinea )
   /*char path[PATH_MAX]; // array para guardar la ruta del directorio actual
   getcwd(path,PATH_MAX);
   printf("%s%s",path,PROMPT);*/
-  printf("%s%s>",get_current_dir_name(),PROMPT);
+  printf("aniegil@upv.edu.es:%s%s>",get_current_dir_name(),PROMPT);
   //printf("Shell-Alumno$>");
   int i = 0;
   while(i < tamanyLinea) {
