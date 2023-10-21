@@ -17,14 +17,9 @@
 int ejecutar (int nordenes , int *nargs , char **ordenes , char ***args , int bgnd) {
   pid_t aux;
   int i;
-  //if(pipeline(nordenes, fich_entrada(), fich_salida(), es_append(), bgnd) == ERROR)
-//	fprintf(stderr,"Error al invocar la función pipeline\n"); 
   for(i=0;i < nordenes;i++) {
     aux = fork(); 
-    /*if(bgnd) {
-    
-    }*/
-		   
+	 
     if(aux == 0) {
       	if(redirigir_entrada(i) == ERROR) {	// Redireccionar entrada
 		fprintf(stderr,"Error al intentar redirigir entrada en la orden:%s\n", ordenes[i]);	

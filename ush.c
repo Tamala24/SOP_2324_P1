@@ -16,7 +16,8 @@
 #include <signal.h>
 #include "profe.h"
 #include <stdio.h>
-//#define PATH_MAX 50
+#include <stdlib.h>
+#define PATH_MAX 100
 
 char *internas[] = {"exit" , "cd"};
 
@@ -25,12 +26,12 @@ char *internas[] = {"exit" , "cd"};
 //
 void visualizar( void );
 int leerLinea( char *linea, int tamanyLinea );
-
+void return_dir(char *last_dir);
 
 //
 // Prog. ppal.
 // 
-int main(int argc, char * argv[])
+int main(int argc, char * argv[], char *envp[])
 {
     
   char line[255];
@@ -39,6 +40,10 @@ int main(int argc, char * argv[])
   char ***m_argumentos;
   int *m_num_arg;
   int m_n;
+  char last_dir[PATH_MAX]; // array para guardar la ruta del directorio anterior. Se usa en cd
+  int interna = 0; //hay o no orden interna en la línea de comandos
+  getcwd(last_dir,PATH_MAX);
+  
   printf("%s",LOGO);
   while(1)
   {
@@ -63,14 +68,13 @@ int main(int argc, char * argv[])
 	     m_argumentos=get_argumentos();
 	     if(m_n>0)
 	     {
-		int interna = 0;
 		for(int i=0;i < m_n; i++) {
 			if(!strcmp(m_ordenes[i], internas[0])) {
 				if(m_num_arg[i] == 1) {
 					exit(0);
 				} else if(m_num_arg[i] == 2) {
 					int n = atoi(m_argumentos[i][1]);
-					if(n > -1 && n < 10) //REVISAR TOPE DE N
+					if(n > -1)
 						exit(n);
 					else {
 						fprintf(stderr,"argumento fuera de rango\n");
@@ -80,18 +84,44 @@ int main(int argc, char * argv[])
 					fprintf(stderr,"exit requiere de un argumento int\n");
 					return ERROR;
 				}
-			}
-			if(!strcmp(m_ordenes[i], internas[1])) {
-				interna = i;
+			} else if(!strcmp(m_ordenes[i], internas[1])) {
+				interna = 1;
+				if(m_num_arg[i] == 1) {			
+					getcwd(last_dir,PATH_MAX);
+					if(chdir(getenv("HOME"))) {
+							fprintf(stderr,"error al cambiar de directorio\n");
+                                                	return ERROR;
+					}
+					/*while (*envp)
+						if((*envp[0] == 'H') && (*envp[1] == 'O') && (*envp[2] == 'M') && (*envp[3] == 'E')) {	
+							chdir((*envp)+5);
+						} else {
+ 							envp++;
+						}*/
+                                } else if(m_num_arg[i] == 2) {
+                                        if(!strcmp(m_argumentos[i][1], "-")) { 
+  						return_dir(last_dir);	      
+					} else {	
+  						getcwd(last_dir,PATH_MAX);
+                                     		if(chdir(m_argumentos[i][1])) {
+                                                	fprintf(stderr,"error al cambiar de directorio\n");
+                                                	return ERROR;
+						}
+                                        }
+				}
 			}
 
 		}
-                if (pipeline(m_n,fich_entrada(),fich_salida(),es_append(),es_background()) == OK) {
+		if(interna) {
+			interna = 0; //reiniciar para la siguiente linea de comandos
+		} else {
+		  if (pipeline(m_n,fich_entrada(),fich_salida(),es_append(),es_background()) == OK) {
                     if(ejecutar(m_n,m_num_arg,m_ordenes,m_argumentos,es_background()) == ERROR) 
 		   	return ERROR;
 		} else 
 		    return ERROR;         
-    	     }
+		}
+	     }
       visualizar();
     } 
  }    
@@ -99,9 +129,13 @@ int main(int argc, char * argv[])
   return 0;
 }
 
-
-
-
+/*función que cambia al directorio anterior*/
+void return_dir(char *last_dir) {
+	char aux[PATH_MAX];
+	strcpy(aux, last_dir);
+	getcwd(last_dir,PATH_MAX);
+	chdir(aux);      		
+}
 
 /****************************************************************/
 /*                       leerLinea                             
